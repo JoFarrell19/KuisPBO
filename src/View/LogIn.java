@@ -1,17 +1,20 @@
 package View;
 
 import javax.swing.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Font;
-public class LogIn {
+
+public class LogIn implements ActionListener   {
     JFrame fLogIn;
     JPanel pLogIn;
     JLabel img, lEmail, lPassword;
 
     JTextField tfEmail;
     JPasswordField pfPassword;
+    JButton btnLogIn, btnBack;
     LogIn() {
         fLogIn = new JFrame("Log In");
         fLogIn.setSize(700, 1000);
@@ -46,7 +49,17 @@ public class LogIn {
         pfPassword = new JPasswordField();
         pfPassword.setBounds(150, 230, 200, 30);
 
+        btnLogIn = new JButton("Log In");
+        btnLogIn.setBounds(1, 280, 100, 50);
+        btnLogIn.addActionListener(this);
 
+
+        btnBack = new JButton("Back");
+        btnBack.setBounds(1, 340, 100, 50);
+        btnBack.addActionListener(this);
+
+        pLogIn.add(btnLogIn);
+        pLogIn.add(btnBack);
         pLogIn.add(lPassword);
         pLogIn.add(pfPassword);
         pLogIn.add(lEmail);
@@ -58,5 +71,20 @@ public class LogIn {
 
     public static void main(String[] args) {
         new LogIn();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        String command = ae.getActionCommand();
+        switch (command) {
+        case "Log In":
+            JOptionPane.showMessageDialog(null, "Belum Beres");
+            break;
+        case "Back":
+            new MainMenu();
+            break;
+        default:
+            throw new AssertionError();
+        }
     }
 }

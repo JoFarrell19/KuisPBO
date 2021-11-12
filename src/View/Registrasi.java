@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.Font;
 import javax.swing.*;
 
-public class Registrasi implements ActionListener  {
+public class Registrasi implements ActionListener {
     JFrame fRegis;
     JPanel pRegis;
     JLabel lEmail, lNama, lPassword;
@@ -14,6 +14,7 @@ public class Registrasi implements ActionListener  {
     JPasswordField pfPassword;
     JComboBox cbCategory;
     JButton btnRegis, btnBack;
+
     Registrasi() {
         fRegis = new JFrame("Log In");
         fRegis.setSize(700, 1000);
@@ -47,10 +48,9 @@ public class Registrasi implements ActionListener  {
         pfPassword = new JPasswordField();
         pfPassword.setBounds(150, 180, 200, 30);
 
-        String category[]={"Private Account","Creator Account","Bussiness Account"};
+        String category[] = { "Private Account", "Creator Account", "Bussiness Account" };
         cbCategory = new JComboBox<>(category);
         cbCategory.setBounds(1, 220, 300, 50);
-
 
         btnRegis = new JButton("Registrasi");
         btnRegis.setBounds(1, 280, 100, 50);
@@ -83,7 +83,7 @@ public class Registrasi implements ActionListener  {
         String command = ae.getActionCommand();
         switch (command) {
         case "Registrasi":
-            new LogIn();
+            JOptionPane.showMessageDialog(null, "Belum Beres");
             break;
         case "Back":
             new MainMenu();
