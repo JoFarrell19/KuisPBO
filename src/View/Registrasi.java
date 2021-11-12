@@ -1,10 +1,12 @@
 package View;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Font;
 import javax.swing.*;
 
-public class Registrasi {
+public class Registrasi implements ActionListener  {
     JFrame fRegis;
     JPanel pRegis;
     JLabel lEmail, lNama, lPassword;
@@ -50,6 +52,16 @@ public class Registrasi {
         cbCategory.setBounds(1, 220, 300, 50);
 
 
+        btnRegis = new JButton("Registrasi");
+        btnRegis.setBounds(1, 280, 100, 50);
+        btnRegis.addActionListener(this);
+
+        btnBack = new JButton("Back");
+        btnBack.setBounds(1, 350, 100, 50);
+        btnBack.addActionListener(this);
+
+        pRegis.add(btnBack);
+        pRegis.add(btnRegis);
         pRegis.add(cbCategory);
         pRegis.add(lPassword);
         pRegis.add(pfPassword);
@@ -58,10 +70,26 @@ public class Registrasi {
         pRegis.add(tfEmail);
         pRegis.add(lEmail);
         fRegis.add(pRegis);
+
         fRegis.setVisible(true);
     }
 
     public static void main(String[] args) {
         new Registrasi();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        String command = ae.getActionCommand();
+        switch (command) {
+        case "Registrasi":
+            new LogIn();
+            break;
+        case "Back":
+            new MainMenu();
+            break;
+        default:
+            throw new AssertionError();
+        }
     }
 }
