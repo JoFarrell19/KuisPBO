@@ -10,7 +10,8 @@ public class Registrasi {
     JLabel lEmail, lNama, lPassword;
     JTextField tfEmail, tfNama;
     JPasswordField pfPassword;
-    
+    JComboBox cbCategory;
+    JButton btnRegis, btnBack;
     Registrasi() {
         fRegis = new JFrame("Log In");
         fRegis.setSize(700, 1000);
@@ -44,7 +45,12 @@ public class Registrasi {
         pfPassword = new JPasswordField();
         pfPassword.setBounds(150, 180, 200, 30);
 
+        String category[]={"Private Account","Creator Account","Bussiness Account"};
+        cbCategory = new JComboBox<>(category);
+        cbCategory.setBounds(1, 220, 300, 50);
 
+
+        pRegis.add(cbCategory);
         pRegis.add(lPassword);
         pRegis.add(pfPassword);
         pRegis.add(lNama);
