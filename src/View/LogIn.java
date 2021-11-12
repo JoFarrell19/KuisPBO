@@ -12,6 +12,10 @@ public class LogIn {
         fLogIn.setLayout(null);
         fLogIn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        pLogIn = new JPanel();
+        pLogIn.setSize(700,1000);
+
+        fLogIn.add(pLogIn);
         fLogIn.setVisible(true);
     }
 
