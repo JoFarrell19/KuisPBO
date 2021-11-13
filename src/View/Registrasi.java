@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.Font;
 import javax.swing.*;
 
+import Controller.QuerryControl;
+
 public class Registrasi implements ActionListener {
     JFrame fRegis;
     JPanel pRegis;
@@ -73,11 +75,6 @@ public class Registrasi implements ActionListener {
 
         fRegis.setVisible(true);
     }
-
-    public static void main(String[] args) {
-        new Registrasi();
-    }
-
     @Override
     public void actionPerformed(ActionEvent ae) {
         String command = ae.getActionCommand();

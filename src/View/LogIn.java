@@ -3,10 +3,11 @@ package View;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.ModuleLayer.Controller;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Font;
-
+import Controller.*;
 public class LogIn implements ActionListener   {
     JFrame fLogIn;
     JPanel pLogIn;
@@ -68,11 +69,6 @@ public class LogIn implements ActionListener   {
         fLogIn.add(pLogIn);
         fLogIn.setVisible(true);
     }
-
-    public static void main(String[] args) {
-        new LogIn();
-    }
-
     @Override
     public void actionPerformed(ActionEvent ae) {
         String command = ae.getActionCommand();

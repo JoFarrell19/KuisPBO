@@ -43,10 +43,6 @@ public class MainMenu implements ActionListener {
         fMenuAwal.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new MainMenu();
-    }
-
     @Override
     public void actionPerformed(ActionEvent ae) {
         String command = ae.getActionCommand();
