@@ -3,10 +3,12 @@ package View;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.Font;
 import javax.swing.*;
-
+import Model.*;
 import Controller.QuerryControl;
+import Model.CategoryUser;
 
 public class Registrasi implements ActionListener {
     JFrame fRegis;
@@ -14,8 +16,11 @@ public class Registrasi implements ActionListener {
     JLabel lEmail, lNama, lPassword;
     JTextField tfEmail, tfNama;
     JPasswordField pfPassword;
-    JComboBox cbCategory;
     JButton btnRegis, btnBack;
+    JComboBox<String> cbCategory;
+    QuerryControl queryController = new QuerryControl();
+    ArrayList<CategoryUser> categories = queryController.selectCategoryUser();
+
 
     Registrasi() {
         fRegis = new JFrame("Log In");
@@ -50,8 +55,11 @@ public class Registrasi implements ActionListener {
         pfPassword = new JPasswordField();
         pfPassword.setBounds(150, 180, 200, 30);
 
-        String category[] = { "Private Account", "Creator Account", "Bussiness Account" };
-        cbCategory = new JComboBox<>(category);
+        String[] categoryList = new String[categories.size()];
+        for (int i = 0; i < categories.size(); i++) {
+            categoryList[i] = categories.get(i).getName();
+        }
+        cbCategory = new JComboBox<>(categoryList);
         cbCategory.setBounds(1, 220, 300, 50);
 
         btnRegis = new JButton("Registrasi");
@@ -75,18 +83,48 @@ public class Registrasi implements ActionListener {
 
         fRegis.setVisible(true);
     }
+
     @Override
     public void actionPerformed(ActionEvent ae) {
         String command = ae.getActionCommand();
         switch (command) {
         case "Registrasi":
-            JOptionPane.showMessageDialog(null, "Belum Beres");
+            String email = tfEmail.getText();
+            String name = tfNama.getText();
+            String password = String.valueOf(pfPassword.getPassword());
+            String category = cbCategory.getSelectedItem().toString();
+
+            // Checking value
+            if (email.equals("") || name.equals("") || password.equals("")) {
+                JOptionPane.showMessageDialog(null, "Please fill all field !");
+            } else if (password.length() < 8) {
+                JOptionPane.showMessageDialog(null, "password requires at least 8 character");
+            } else {
+                int idCategory = 0;
+                for (int i = 0; i < categories.size(); i++) {
+                    if (categories.get(i).getName().equals(category)) {
+                        idCategory = categories.get(i).getIdCategory();
+                    }
+                }
+
+                User user = new User(name, email, password, idCategory);
+                boolean success = queryController.insertUser(user);
+
+                if (success) {
+                    JOptionPane.showMessageDialog(null, "Register success");
+                    fRegis.dispose();
+                    new MainMenu();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Register failed");
+                }
+            }
             break;
         case "Back":
             new MainMenu();
+            fRegis.dispose();
             break;
         default:
-            throw new AssertionError();
+            break;
         }
     }
 }

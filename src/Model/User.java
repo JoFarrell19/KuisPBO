@@ -1,30 +1,40 @@
 package Model;
 
 public class User {
-    private int id;
+    private int idUser;
     private String name;
     private String email;
     private String password;
     private int idCategory;
 
-    public User(int id, String name, String email, String password, int idCategory) {
-        this.id = id;
+    public User(int idUser, String name, String email, String password, int idCategory) {
+        this.idUser = idUser;
         this.name = name;
         this.email = email;
         this.password = password;
         this.idCategory = idCategory;
     }
-
-    public int getId() {
-        return id;
+    public User(String name, String email, String password, int idCategory) {
+        
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.idCategory = idCategory;
+    }
+    public User() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+
+    public int getIdUser() {
+        return this.idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -32,7 +42,7 @@ public class User {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -40,7 +50,7 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -48,16 +58,11 @@ public class User {
     }
 
     public int getIdCategory() {
-        return idCategory;
+        return this.idCategory;
     }
 
     public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", idCategory=" + idCategory + '}';
-    }
-    
 }

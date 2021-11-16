@@ -1,33 +1,30 @@
 package Model;
 
 public class CategoryUser {
-    private int id;
+    private int idCategory;
     private String name;
 
-    public CategoryUser(int id, String name) {
-        this.id = id;
+    public CategoryUser(int idCategory, String name) {
+        this.idCategory = idCategory;
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    public CategoryUser() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getIdCategory() {
+        return this.idCategory;
+    }
+
+    public void setIdCategory(int idCategory) {
+        this.idCategory = idCategory;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
-
-    @Override
-    public String toString() {
-        return "CategoryUser{" + "id=" + id + ", name=" + name + '}';
-    }
-    
 }

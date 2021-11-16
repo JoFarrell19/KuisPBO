@@ -7,8 +7,10 @@ import java.lang.ModuleLayer.Controller;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Font;
-import Controller.*;
-public class LogIn implements ActionListener   {
+import Controller.QuerryControl;
+import Model.User;
+
+public class LogIn implements ActionListener {
     JFrame fLogIn;
     JPanel pLogIn;
     JLabel img, lEmail, lPassword;
@@ -16,6 +18,7 @@ public class LogIn implements ActionListener   {
     JTextField tfEmail;
     JPasswordField pfPassword;
     JButton btnLogIn, btnBack;
+
     LogIn() {
         fLogIn = new JFrame("Log In");
         fLogIn.setSize(700, 1000);
@@ -23,15 +26,14 @@ public class LogIn implements ActionListener   {
         fLogIn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         pLogIn = new JPanel();
-        pLogIn.setSize(700,1000);
+        pLogIn.setSize(700, 1000);
         pLogIn.setBackground(Color.white);
         pLogIn.setLayout(null);
         pLogIn.setVisible(true);
 
-
         ImageIcon logo = new ImageIcon("src\\Source\\53d.jpg");
-        Image scaleImage = logo.getImage().getScaledInstance(100, 100,Image.SCALE_SMOOTH);
-        
+        Image scaleImage = logo.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+
         img = new JLabel();
         img.setIcon(new ImageIcon(scaleImage));
         img.setBounds(1, 1, 100, 100);
@@ -41,7 +43,7 @@ public class LogIn implements ActionListener   {
         lEmail.setBounds(1, 150, 1000, 100);
 
         tfEmail = new JTextField();
-        tfEmail.setBounds(120,190,200,30);
+        tfEmail.setBounds(120, 190, 200, 30);
 
         lPassword = new JLabel("Masukan Password : ");
         lPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -53,7 +55,6 @@ public class LogIn implements ActionListener   {
         btnLogIn = new JButton("Log In");
         btnLogIn.setBounds(1, 280, 100, 50);
         btnLogIn.addActionListener(this);
-
 
         btnBack = new JButton("Back");
         btnBack.setBounds(1, 340, 100, 50);
@@ -69,15 +70,31 @@ public class LogIn implements ActionListener   {
         fLogIn.add(pLogIn);
         fLogIn.setVisible(true);
     }
+
     @Override
     public void actionPerformed(ActionEvent ae) {
         String command = ae.getActionCommand();
         switch (command) {
         case "Log In":
-            JOptionPane.showMessageDialog(null, "Belum Beres");
+            String email = tfEmail.getText();
+            String password = String.valueOf(pfPassword.getPassword());
+            if (email.equals("") && password.equals("")) {
+                JOptionPane.showMessageDialog(null, "Error", "Nama dan Email Kosong", JOptionPane.ERROR_MESSAGE);
+            } else {
+                QuerryControl qControl = new QuerryControl();
+                User user = qControl.getUser(email, password);
+                if (user != null) {
+                    // new MenuProfile(user);
+                    JOptionPane.showMessageDialog(null,"Finish");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error", "User tidak ditemukan", JOptionPane.ERROR_MESSAGE);
+                    fLogIn.dispose();
+                }
+            }
             break;
         case "Back":
             new MainMenu();
+            fLogIn.dispose();
             break;
         default:
             throw new AssertionError();
