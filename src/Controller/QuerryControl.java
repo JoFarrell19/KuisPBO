@@ -7,15 +7,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
 public class QuerryControl {
+
+    
     DatabaseHandler conn = new DatabaseHandler();
 
     public boolean insertUser(User user) {
         conn.connect();
-        String query = "INSERT INTO `user`(`name`,`email`.`password`,`idCategory`)VALUES ('?','?','?','?')";
+        String query = "INSERT INTO `user`(`name`,`email`,`password`,`idCategory`)VALUES (?,?,?,?)";
         try {
             PreparedStatement stmt = conn.conn.prepareStatement(query);
             stmt.setString(1, user.getName());
@@ -30,10 +31,9 @@ public class QuerryControl {
         }
     }
 
-    public User getUser(String email, String password) {
+    public User selectUser(String email, String password) {
         conn.connect();
-        String query = "SELECT `idUser`,`name`,`email`,`password`,`idCategory` FROM `user` WHERE email : " + email
-                + " AND password : " + password;
+        String query = "SELECT `idUser`, `name`, `email`, `password`, `idCategory` FROM `user` WHERE email='" + email + "' AND password='" + password + "'";
         try {
             Statement stmt = conn.conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
@@ -44,7 +44,7 @@ public class QuerryControl {
                 user.setName(result.getString("name"));
                 user.setEmail(result.getString("email"));
                 user.setPassword(result.getString("password"));
-                user.setIdCategory(result.getInt("id_category"));
+                user.setIdCategory(result.getInt("idCategory"));
             }
 
             if (user.getIdUser() != 0) {
@@ -75,7 +75,7 @@ public class QuerryControl {
                 user.setName(result.getString("name"));
                 user.setEmail(result.getString("email"));
                 user.setPassword(result.getString("password"));
-                user.setIdCategory(result.getInt("id_category"));
+                user.setIdCategory(result.getInt("idCategory"));
                 users.add(user);
             }
 
@@ -97,7 +97,7 @@ public class QuerryControl {
 
             while (result.next()) {
                 CategoryUser categoryUser = new CategoryUser();
-                categoryUser.setIdCategory(result.getInt("id_category"));
+                categoryUser.setIdCategory(result.getInt("idCategory"));
                 categoryUser.setName(result.getString("name"));
                 categories.add(categoryUser);
             }

@@ -49,12 +49,15 @@ public class MainMenu implements ActionListener {
         switch (command) {
         case "Log In":
             new LogIn();
+            fMenuAwal.dispose();
             break;
         case "Registrasi":
             new Registrasi();
+            fMenuAwal.dispose();
             break;
         case "Lihat Data":
             new LihatData();
+            fMenuAwal.dispose();
             break;
         default:
             throw new AssertionError();

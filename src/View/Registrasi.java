@@ -21,9 +21,8 @@ public class Registrasi implements ActionListener {
     QuerryControl queryController = new QuerryControl();
     ArrayList<CategoryUser> categories = queryController.selectCategoryUser();
 
-
     Registrasi() {
-        fRegis = new JFrame("Log In");
+        fRegis = new JFrame("Registration");
         fRegis.setSize(700, 1000);
         fRegis.setLayout(null);
         fRegis.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,11 +93,10 @@ public class Registrasi implements ActionListener {
             String password = String.valueOf(pfPassword.getPassword());
             String category = cbCategory.getSelectedItem().toString();
 
-            // Checking value
             if (email.equals("") || name.equals("") || password.equals("")) {
-                JOptionPane.showMessageDialog(null, "Please fill all field !");
+                JOptionPane.showMessageDialog(null, "Tolong isi dengan benar, masih ada yang kosong");
             } else if (password.length() < 8) {
-                JOptionPane.showMessageDialog(null, "password requires at least 8 character");
+                JOptionPane.showMessageDialog(null, "password terlalu pendek, harus lebih dari 8 huruf");
             } else {
                 int idCategory = 0;
                 for (int i = 0; i < categories.size(); i++) {
@@ -111,11 +109,11 @@ public class Registrasi implements ActionListener {
                 boolean success = queryController.insertUser(user);
 
                 if (success) {
-                    JOptionPane.showMessageDialog(null, "Register success");
+                    JOptionPane.showMessageDialog(null, "Register Success");
                     fRegis.dispose();
                     new MainMenu();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Register failed");
+                    JOptionPane.showMessageDialog(null, "Failed to register");
                 }
             }
             break;

@@ -78,16 +78,17 @@ public class LogIn implements ActionListener {
         case "Log In":
             String email = tfEmail.getText();
             String password = String.valueOf(pfPassword.getPassword());
+            
             if (email.equals("") && password.equals("")) {
-                JOptionPane.showMessageDialog(null, "Error", "Nama dan Email Kosong", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Nama dan Email Kosong", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 QuerryControl qControl = new QuerryControl();
-                User user = qControl.getUser(email, password);
+                User user = qControl.selectUser(email, password);
                 if (user != null) {
-                    // new MenuProfile(user);
-                    JOptionPane.showMessageDialog(null,"Finish");
+                    new MenuProfile(user);
+                    fLogIn.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error", "User tidak ditemukan", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "User tidak ditemukan", "Error", JOptionPane.ERROR_MESSAGE);
                     fLogIn.dispose();
                 }
             }
