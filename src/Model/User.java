@@ -6,7 +6,15 @@ public class User {
     private String email;
     private String password;
     private int idCategory;
-    
+
+    public User(int idUser, String name, String email, String password, int idCategory) {
+        this.idUser = idUser;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.idCategory = idCategory;
+    }
+
     public User(String name, String email, String password, int idCategory) {
         
         this.name = name;
@@ -14,6 +22,7 @@ public class User {
         this.password = password;
         this.idCategory = idCategory;
     }
+    
     public User() {
     }
 

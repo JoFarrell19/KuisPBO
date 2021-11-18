@@ -149,6 +149,7 @@ public class QuerryControl {
         }
     }
 
+
     public boolean deleteUser(int idUser) {
         conn.connect();
         String query = "DELETE FROM `user` WHERE `IdUser`=?";

@@ -16,7 +16,7 @@ public class LihatData implements ActionListener{
     JPanel pLihatData;
     JButton btnSearch, btnBack;
     JTable jtDataTable;
-    DefaultTableModel model;
+    DefaultTableModel modeltable;
     QuerryControl queryController = new QuerryControl();
     JComboBox<String> cbCategory;
     ArrayList<CategoryUser> categories = queryController.selectCategoryUser();
@@ -48,8 +48,8 @@ public class LihatData implements ActionListener{
         btnBack.addActionListener(this);
 
         jtDataTable = new JTable();
-        jtDataTable.setBounds(0, 160, 700,700);
-
+        jtDataTable.setBounds(0, 180, 700,700);
+        jtDataTable.setBackground(Color.yellow);
 
         pLihatData.add(jtDataTable);
         pLihatData.add(btnSearch);
@@ -57,9 +57,6 @@ public class LihatData implements ActionListener{
         pLihatData.add(cbCategory); 
         fLihatData.add(pLihatData);
         fLihatData.setVisible(true);
-    }
-    public static void main(String[] args) {
-        new LihatData();
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -72,7 +69,7 @@ public class LihatData implements ActionListener{
                 
                 //Setter
                 String[] columnData = {"idUser", "name", "email", "password", "idCategory"};
-                model = new DefaultTableModel(columnData, 0);
+                modeltable = new DefaultTableModel(columnData, 0);
 
                 for (int i = 0; i < users.size(); i++) {
                     String[] newModel = new String[5];
@@ -81,10 +78,10 @@ public class LihatData implements ActionListener{
                     newModel[2] = users.get(i).getEmail();
                     newModel[3] = users.get(i).getPassword();
                     newModel[4] = String.valueOf(users.get(i).getIdCategory());
-                    model.addRow(newModel);
+                    modeltable.addRow(newModel);
                 }
 
-                jtDataTable.setModel(model);
+                jtDataTable.setModel(modeltable);
                 break;
             case "Back":
                 new MainMenu();

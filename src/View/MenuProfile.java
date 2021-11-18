@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+
+import com.mysql.cj.util.PerVmServerConfigCacheFactory;
+
 import Controller.QuerryControl;
 import Model.*;
 
@@ -22,7 +25,10 @@ public class MenuProfile implements ActionListener {
     JComboBox<String> cbCategory;
     ArrayList<CategoryUser> categories = queryController.selectCategoryUser();
 
-    public MenuProfile(User user) {
+    public MenuProfile(User currentUser) {
+        // mengisi variable local  jadi global
+        setUser(currentUser);
+
         fMenuProfile = new JFrame();
         fMenuProfile.setSize(700, 1000);
         fMenuProfile.setLayout(null);
@@ -39,6 +45,7 @@ public class MenuProfile implements ActionListener {
 
         tfEmail = new JTextField();
         tfEmail.setBounds(55, 50, 200, 30);
+        tfEmail.setText(currentUser.getEmail());
 
         lNama = new JLabel("Nama : ");
         lNama.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -46,6 +53,7 @@ public class MenuProfile implements ActionListener {
 
         tfNama = new JTextField();
         tfNama.setBounds(55, 110, 200, 30);
+        tfNama.setText(currentUser.getName());
 
         lPassword = new JLabel("Password : ");
         lPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -53,6 +61,7 @@ public class MenuProfile implements ActionListener {
 
         pfPassword = new JPasswordField();
         pfPassword.setBounds(80, 160, 200, 30);
+        pfPassword.setText(user.getPassword());
 
         lCategory = new JLabel("Category : ");
         lCategory.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -62,6 +71,7 @@ public class MenuProfile implements ActionListener {
         for (int i = 0; i < categories.size(); i++) {
             categoryList[i] = categories.get(i).getName();
         }
+
         cbCategory = new JComboBox<>(categoryList);
         cbCategory.setBounds(90, 200, 300, 50);
 
@@ -92,49 +102,62 @@ public class MenuProfile implements ActionListener {
         fMenuProfile.setVisible(true);
     }
 
+    //supaya variable local jadi global
+    private void setUser(User currentuser) {
+        user = currentuser;
+    }
+
     @Override
     public void actionPerformed(ActionEvent ae) {
         String command = ae.getActionCommand();
         switch (command) {
         case "Simpan":
+
+            //Getter
+            int idUser = user.getIdUser();
             String email = tfEmail.getText();
             String name = tfNama.getText();
             String password = String.valueOf(pfPassword.getPassword());
             String category = cbCategory.getSelectedItem().toString();
-
+            
+            //
             if (email.equals("") || name.equals("") || password.equals("")) {
-                JOptionPane.showMessageDialog(null, "Tolong isi dengan benar, masih ada yang kosong");
+                JOptionPane.showMessageDialog(null, "Masih ada field kosong", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (password.length() < 8) {
-                JOptionPane.showMessageDialog(null, "password terlalu pendek, harus lebih dari 8 huruf");
+                JOptionPane.showMessageDialog(null, "Password terlalu pendek", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 int idCategory = 0;
                 for (int i = 0; i < categories.size(); i++) {
                     if (categories.get(i).getName().equals(category)) {
                         idCategory = categories.get(i).getIdCategory();
                     }
+
                 }
+                // Update user data
                 User updatedUser = new User(name, email, password, idCategory);
-                boolean success = queryController.updateUser(user.getIdUser(), updatedUser);
+                boolean success = querryControl.updateUser(idUser, updatedUser);
 
                 if (success) {
-                    JOptionPane.showMessageDialog(null, "Update success");
+                    JOptionPane.showMessageDialog(null, "Updated");
+                    fMenuProfile.dispose();
+                    new MainMenu();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Update failed");
+                    JOptionPane.showMessageDialog(null, "Failed", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+
             }
-            fMenuProfile.dispose();
-            new MainMenu();
 
             break;
         case "Hapus":
-            boolean success = queryController.deleteUser(user.getIdUser());
+            boolean success = querryControl.deleteUser(user.getIdUser());
             if (success) {
                 JOptionPane.showMessageDialog(null, "Deleted");
+                new MainMenu();
+                fMenuProfile.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to delete");
             }
-            new MainMenu();
-            fMenuProfile.dispose();
+
             break;
         case "Back":
             new MainMenu();
@@ -143,6 +166,5 @@ public class MenuProfile implements ActionListener {
         default:
             break;
         }
-
     }
 }

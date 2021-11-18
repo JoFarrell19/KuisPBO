@@ -89,7 +89,6 @@ public class LogIn implements ActionListener {
                     fLogIn.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "User tidak ditemukan", "Error", JOptionPane.ERROR_MESSAGE);
-                    fLogIn.dispose();
                 }
             }
             break;
